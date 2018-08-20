@@ -4,7 +4,7 @@ from torch.utils.data import Dataset
 
 class PascalVOC(Dataset):
 
-    def __int__(self):
+    def __init__(self):
         """
         Initialize dataset
         """
