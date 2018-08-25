@@ -2,6 +2,7 @@ import os
 import os.path
 import sys
 from torch.utils.data import Dataset
+from torch.utils.data import DataLoader
 from PIL import Image, ImageDraw
 if sys.version_info[0] == 2:
     import xml.etree.cElementTree as ET
@@ -9,7 +10,7 @@ else:
     import xml.etree.ElementTree as ET
 
 
-class TransformVOCDetectionAnnonation(object):
+class TransformAnnonation(object):
     def __init__(self, keep_difficult=False):
         self.keep_difficult = keep_difficult
 
@@ -101,8 +102,22 @@ class PascalVOC(Dataset):
         image.show()
 
 
-def get_loader(data_path, mode='train'):
+def get_loader(data_path,
+               dataset,
+               batch_size,
+               mode='train',
+               transform=None,
+               target_transform=TransformAnnonation):
     """
     Get dataset loader
     """
-    pass
+    shuffle = False
+    if mode == 'train':
+        shuffle = True
+
+    dataset = PascalVOC(data_path, dataset, mode, transform, target_transform)
+    data_loader = DataLoader(dataset=dataset,
+                             batch_size=batch_size,
+                             shuffle=shuffle)
+
+    return data_loader
