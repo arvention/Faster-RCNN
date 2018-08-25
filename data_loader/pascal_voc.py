@@ -102,12 +102,12 @@ class PascalVOC(Dataset):
         image.show()
 
 
-def get_loader(data_path,
-               dataset,
-               batch_size,
-               mode='train',
-               transform=None,
-               target_transform=TransformAnnonation):
+def get_voc_loader(data_path,
+                   dataset,
+                   batch_size,
+                   mode='train',
+                   transform=None,
+                   target_transform=TransformAnnonation):
     """
     Get dataset loader
     """
