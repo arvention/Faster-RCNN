@@ -4,6 +4,7 @@ import sys
 from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
 from PIL import Image, ImageDraw
+from torchvision import transforms
 if sys.version_info[0] == 2:
     import xml.etree.cElementTree as ET
 else:
@@ -114,6 +115,12 @@ def get_voc_loader(data_path,
     shuffle = False
     if mode == 'train':
         shuffle = True
+
+    transform = transforms.Compose(
+      [transforms.RandomCrop(224),
+       transforms.ToTensor(),
+       transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]
+    )
 
     dataset = PascalVOC(data_path, dataset, mode, transform, target_transform)
     data_loader = DataLoader(dataset=dataset,
